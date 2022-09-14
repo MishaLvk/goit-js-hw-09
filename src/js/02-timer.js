@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const datetimePicker = document.querySelector('input[type="text"]');
 const start = document.querySelector('button[data-start]');
@@ -21,7 +22,7 @@ const options = {
     if (selectDate > Date.now()) {
       start.removeAttribute('disabled');
     } else {
-      window.alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future');
       return;
     }
   },
@@ -29,9 +30,9 @@ const options = {
 
 const fp = flatpickr(datetimePicker, options);
 
-start.addEventListener('click', cons);
+start.addEventListener('click', readout);
 
-function cons() {
+function readout() {
   start.setAttribute('disabled', true);
   const exercise = setInterval(() => {
     let timer = selectDate - Date.now();
@@ -42,7 +43,6 @@ function cons() {
       minute.textContent = `${addLeadingZero(minutes)}`;
       second.textContent = `${addLeadingZero(seconds)}`;
     } else {
-      console.log('stop');
       clearInterval(exercise);
     }
   }, 1000);
